@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -36,6 +37,8 @@ import com.example.bcu_study.domain.model.Subject
 import com.example.bcu_study.R
 import androidx.compose.ui.text.style.TextAlign
 import com.example.bcu_study.components.SubjectCard
+import com.example.bcu_study.components.tasksList
+import com.example.bcu_study.domain.model.Tasks
 
 
 @Composable
@@ -47,6 +50,27 @@ fun DashboardScreen(): Unit {
         Subject(name = "JS", goalHours = 10f, colors = Subject.subjectCardColors[2]),
         Subject(name = "Python", goalHours = 10f, colors = Subject.subjectCardColors[3]),
         Subject(name = "C++", goalHours = 10f, colors = Subject.subjectCardColors[4]),
+    )
+    val tasks = listOf(
+        Tasks(title = "prepare notes", description = "", dueDate = 0L,
+            priority = 1,
+            relatedToSubject = "",
+            isComplete = false),
+
+        Tasks(title = "test 1", description = "", dueDate = 0L,
+            priority = 1,
+            relatedToSubject = "",
+            isComplete = true),
+
+        Tasks(title = "test 2", description = "", dueDate = 0L,
+            priority = 1,
+            relatedToSubject = "",
+            isComplete = false),
+
+        Tasks(title = "test 3", description = "", dueDate = 0L,
+            priority = 1,
+            relatedToSubject = "",
+            isComplete = true)
     )
     Scaffold (
         topBar = { DashboardScreenTopbar()}
@@ -72,6 +96,22 @@ fun DashboardScreen(): Unit {
                     subjectList = subject
                 )
             }
+            item {
+                Button(onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 48.dp, vertical = 20.dp)
+                    ) {
+                        Text(text = "Start Study Session")
+
+                }
+            }
+            tasksList(
+                sectionTile = "UPCOMING TASKS",
+                emptyListText = "You don't have any upcoming tasks,\n" +
+                        "Click the + button in subject screen to add new tasks",
+                tasks = tasks
+            )
         }
     }
 }
