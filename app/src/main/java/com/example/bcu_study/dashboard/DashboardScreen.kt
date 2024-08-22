@@ -27,6 +27,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import com.example.bcu_study.domain.model.Subject
 import com.example.bcu_study.R
 import androidx.compose.ui.text.style.TextAlign
+import com.example.bcu_study.components.AddSubjectDialog
 import com.example.bcu_study.components.StudySessionsList
 import com.example.bcu_study.components.SubjectCard
 import com.example.bcu_study.components.tasksList
@@ -90,6 +95,10 @@ fun DashboardScreen(): Unit {
             date = 0L, duration = 2, sessionId = 0, sessionSubjectId = 0)
 
     )
+    var isAddSubjectDialogOpen by rememberSaveable { mutableStateOf( false) }
+    AddSubjectDialog(isOpen = , onDismissRequest = { /*TODO*/ }) {
+        
+    }
 
     Scaffold (
         topBar = { DashboardScreenTopbar()}
