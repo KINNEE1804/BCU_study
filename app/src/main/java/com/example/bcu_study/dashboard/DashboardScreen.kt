@@ -49,108 +49,73 @@ import com.example.bcu_study.components.SubjectCard
 import com.example.bcu_study.components.tasksList
 import com.example.bcu_study.domain.model.Session
 import com.example.bcu_study.domain.model.Tasks
+import com.example.bcu_study.session
+import com.example.bcu_study.subject
+import com.example.bcu_study.tasks
 
 
 @Composable
 fun DashboardScreen(): Unit {
 
-    val subject = listOf(
-        Subject(name = "English", goalHours = 10f, colors = Subject.subjectCardColors[0], subjectId = 0),
-        Subject(name = "DB", goalHours = 10f, colors = Subject.subjectCardColors[1], subjectId = 0),
-        Subject(name = "JS", goalHours = 10f, colors = Subject.subjectCardColors[2], subjectId = 0),
-        Subject(name = "Python", goalHours = 10f, colors = Subject.subjectCardColors[3], subjectId = 0),
-        Subject(name = "C++", goalHours = 10f, colors = Subject.subjectCardColors[4], subjectId = 0),
-    )
-    val tasks = listOf(
-        Tasks(title = "prepare notes", description = "", dueDate = 0L,
-            priority = 0,
-            relatedToSubject = "",
-            isComplete = false,
-            tasksId = 1, taskSubjectId = 0),
 
-        Tasks(title = "test 1", description = "", dueDate = 0L,
-            priority = 1,
-            relatedToSubject = "",
-            isComplete = true,tasksId = 1, taskSubjectId = 0),
+    var isAddSubjectDialogOpen by rememberSaveable { mutableStateOf(false) }
+    var isDeleteSessionDialogOpen by rememberSaveable { mutableStateOf(false) }
 
-        Tasks(title = "test 2", description = "", dueDate = 0L,
-            priority = 2,
-            relatedToSubject = "",
-            isComplete = false,tasksId = 1, taskSubjectId = 0),
-
-        Tasks(title = "test 3", description = "", dueDate = 0L,
-            priority = 0,
-            relatedToSubject = "",
-            isComplete = true,tasksId = 1, taskSubjectId = 0)
-    )
-
-    val session = listOf(
-        Session(relatedToSubject = "English",
-            date = 0L, duration = 2, sessionId = 0, sessionSubjectId = 0),
-        Session(relatedToSubject = "DB",
-        date = 0L, duration = 2, sessionId = 0, sessionSubjectId = 0),
-        Session(relatedToSubject = "JS",
-            date = 0L, duration = 2, sessionId = 0, sessionSubjectId = 0),
-        Session(relatedToSubject = "Python",
-            date = 0L, duration = 2, sessionId = 0, sessionSubjectId = 0),
-        Session(relatedToSubject = "C++",
-            date = 0L, duration = 2, sessionId = 0, sessionSubjectId = 0)
-
-    )
-    var isAddSubjectDialogOpen by rememberSaveable { mutableStateOf( false) }
-    var isDeleteSessionDialogOpen by rememberSaveable { mutableStateOf( false) }
-
-    var subjectName by remember { mutableStateOf( value = "")}
-    var goalHours by remember { mutableStateOf( value = "")}
-    var selectedColor by remember { mutableStateOf(Subject.subjectCardColors.random())}
+    var subjectName by remember { mutableStateOf(value = "") }
+    var goalHours by remember { mutableStateOf(value = "") }
+    var selectedColor by remember { mutableStateOf(Subject.subjectCardColors.random()) }
     AddSubjectDialog(isOpen = isAddSubjectDialogOpen,
         subjectName = subjectName,
         goalHours = goalHours,
-        onSubjectNameChange = {subjectName = it},
-        onGoalsHoursChange = {goalHours = it},
+        onSubjectNameChange = { subjectName = it },
+        onGoalsHoursChange = { goalHours = it },
         selectedColors = selectedColor,
-        onColorChange = {selectedColor = it},
+        onColorChange = { selectedColor = it },
         onDismissRequest = { isAddSubjectDialogOpen = false },
-        onConfirmButtonClick = { isAddSubjectDialogOpen = false})
-    DeleteDialog(isOpen = isDeleteSessionDialogOpen , title = "Delete Session ?", bodyText = "Are you sure, you want to delete this session ? Your studied hours will be reduced"+
-        "by this session time. This action can not undo ",
+        onConfirmButtonClick = { isAddSubjectDialogOpen = false })
+    DeleteDialog(isOpen = isDeleteSessionDialogOpen,
+        title = "Delete Session ?",
+        bodyText = "Are you sure, you want to delete this session ? Your studied hours will be reduced" +
+                "by this session time. This action can not undo ",
         onDismissRequest = { isDeleteSessionDialogOpen = false },
-        onConfirmButtonClick = {isDeleteSessionDialogOpen = false})
+        onConfirmButtonClick = { isDeleteSessionDialogOpen = false })
 
-    Scaffold (
-        topBar = { DashboardScreenTopbar()}
+    Scaffold(
+        topBar = { DashboardScreenTopbar() }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            item { 
+            item {
                 CountCardsSection(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp),
                     subjectCount = 5,
                     studiedHours = "10",
-                    goalHours = "15")
+                    goalHours = "15"
+                )
 
             }
-            item { 
+            item {
                 SubjectCardsSection(
                     modifier = Modifier.fillMaxWidth(),
                     subjectList = subject,
-                    onAddIconClicked =  {
+                    onAddIconClicked = {
                         isAddSubjectDialogOpen = true
                     }
                 )
             }
             item {
-                Button(onClick = { /*TODO*/ },
+                Button(
+                    onClick = { /*TODO*/ },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 48.dp, vertical = 20.dp)
-                    ) {
-                        Text(text = "Start Study Session")
+                ) {
+                    Text(text = "Start Study Session")
 
                 }
             }
@@ -168,9 +133,9 @@ fun DashboardScreen(): Unit {
             StudySessionsList(
                 sectionTile = "RECENT STUDY SESSION",
                 emptyListText = "You don't have any Recent study sessions,\n" +
-                "Start study session to begin recording your process",
+                        "Start study session to begin recording your process",
                 sessions = session,
-                onDeleteIconClick = {isDeleteSessionDialogOpen = true }
+                onDeleteIconClick = { isDeleteSessionDialogOpen = true }
             )
         }
     }
@@ -179,30 +144,43 @@ fun DashboardScreen(): Unit {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DashboardScreenTopbar(): Unit {
-    CenterAlignedTopAppBar(title = { 
+    CenterAlignedTopAppBar(title = {
         Text(
             text = "BCU_study",
-            style = MaterialTheme.typography.headlineMedium)
+            style = MaterialTheme.typography.headlineMedium
+        )
     })
-    
+
 }
 
 //addcountcard
 @Composable
 private fun CountCardsSection(
-   modifier: Modifier,
-   subjectCount: Int,
-   studiedHours: String,
-   goalHours: String
-){
-    Row(modifier = modifier){
-        CountCard(modifier = Modifier.weight(1f),headingtext = "Subject Count" , count = "$subjectCount")
+    modifier: Modifier,
+    subjectCount: Int,
+    studiedHours: String,
+    goalHours: String
+) {
+    Row(modifier = modifier) {
+        CountCard(
+            modifier = Modifier.weight(1f),
+            headingtext = "Subject Count",
+            count = "$subjectCount"
+        )
         Spacer(modifier = Modifier.width(10.dp))
         //
-        CountCard(modifier = Modifier.weight(1f) ,headingtext = "Studied Hours" , count = studiedHours)
+        CountCard(
+            modifier = Modifier.weight(1f),
+            headingtext = "Studied Hours",
+            count = studiedHours
+        )
         Spacer(modifier = Modifier.width(10.dp))
         //
-        CountCard(modifier = Modifier.weight(1f),headingtext = "Goal Study Hours" , count = goalHours)
+        CountCard(
+            modifier = Modifier.weight(1f),
+            headingtext = "Goal Study Hours",
+            count = goalHours
+        )
     }
 
 }
@@ -211,34 +189,36 @@ private fun CountCardsSection(
 @Composable
 private fun SubjectCardsSection(
     modifier: Modifier,
-    subjectList : List<Subject>,
+    subjectList: List<Subject>,
     emptyListText: String = "You don't have any subjects.\n Click the + button to add new subject. ",
-    onAddIconClicked : () -> Unit
+    onAddIconClicked: () -> Unit
 ): Unit {
     Column(
         modifier = Modifier,
 
-    ) {
-        Row (
+        ) {
+        Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "SUBJECTS",
+            Text(
+                text = "SUBJECTS",
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(start = 12.dp)
-                )
+            )
             IconButton(onClick = onAddIconClicked) {
-               Icon(imageVector = Icons.Default.Add, contentDescription = "Add Subject" )
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Subject")
             }
 
         }
-        if(subjectList.isEmpty()){
+        if (subjectList.isEmpty()) {
             Image(
                 modifier = Modifier
                     .size(120.dp)
                     .align(Alignment.CenterHorizontally),
-                painter = painterResource(R.drawable.img_book), contentDescription = emptyListText)
+                painter = painterResource(R.drawable.img_book), contentDescription = emptyListText
+            )
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = emptyListText,
@@ -247,15 +227,17 @@ private fun SubjectCardsSection(
                 textAlign = TextAlign.Center
             )
         }
-        LazyRow (
+        LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(start = 12.dp, end = 12.dp )
+            contentPadding = PaddingValues(start = 12.dp, end = 12.dp)
         ) {
-            items(subjectList) {subject -> SubjectCard(
-                subjectName = subject.name,
-                gradientColors = subject.colors,
-                onClick = {}) }
+            items(subjectList) { subject ->
+                SubjectCard(
+                    subjectName = subject.name,
+                    gradientColors = subject.colors,
+                    onClick = {})
+            }
         }
     }
-    
+
 }
