@@ -1,6 +1,11 @@
 package com.example.bcu_study.task
 
+import android.icu.text.AlphabeticIndex.Bucket.LabelType
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,10 +13,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,11 +40,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.bcu_study.components.DeleteDialog
 import com.example.bcu_study.components.TaskCheckBox
 import com.example.bcu_study.ui.theme.Red
+import com.example.bcu_study.util.Priority
 
 @Composable
 fun TaskScreen() {
+
+    var isDeleteDialogOpen by rememberSaveable {
+        mutableStateOf(false)
+    }
     var title by remember {
         mutableStateOf("")
     }
@@ -50,6 +66,17 @@ fun TaskScreen() {
         title.length > 30 -> "Task title is to long"
         else -> null
     }
+
+    DeleteDialog(
+        isOpen = isDeleteDialogOpen,
+        title ="Delete Task?",
+        bodyText = "Are you sure, you want to delete this task?" +
+        "This action can not be undone ",
+        onDismissRequest = {isDeleteDialogOpen = false},
+        onConfirmButtonClick = {
+            isDeleteDialogOpen = false
+        })
+
     Scaffold(
         topBar = {
             TaskScreenTopBar(
@@ -57,13 +84,14 @@ fun TaskScreen() {
                 isComplete = false,
                 checkBoxBorderColor = Red,
                 onBackButtonClick = { /*TODO*/ },
-                onDeleteButtonClick = { /*TODO*/ },
+                onDeleteButtonClick = { isDeleteDialogOpen = true },
                 onCheckBoxClick = {}
             )
         }
     ) { paddingValue ->
         Column(
             modifier = Modifier
+                .verticalScroll(state = rememberScrollState())
                 .fillMaxSize()
                 .padding(paddingValue)
                 .padding(horizontal = 12.dp)
@@ -90,7 +118,7 @@ fun TaskScreen() {
                 verticalAlignment = Alignment.CenterVertically
             )
             {
-                Text(text = "English", style = MaterialTheme.typography.bodyLarge)
+                Text(text = "19 September, 2024", style = MaterialTheme.typography.bodyLarge)
                 IconButton(onClick = { /*TODO*/ }) {
                     Icon(
                         imageVector = Icons.Default.DateRange,
@@ -98,6 +126,52 @@ fun TaskScreen() {
                     )
 
                 }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(text = "Priority", style = MaterialTheme.typography.bodySmall)
+            Spacer(modifier = Modifier.height(10.dp))
+            Row (modifier = Modifier.fillMaxWidth()){
+                Priority.entries.forEach { 
+                    priority ->
+                    PriorityButton(
+                        modifier = Modifier.weight(1f),
+                        label = priority.title,
+                        backgroundColor = priority.color,
+                        borderColor = if (priority == Priority.MEDIUM){
+                            Color.White
+                        }else Color.Transparent,
+                        labelColor = if (priority == Priority.MEDIUM){
+                            Color.White
+                        }else Color.White.copy(alpha = 0.7f),
+                        onClick = {}
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(30.dp))
+            Text(text = "Related to Subject", style = MaterialTheme.typography.bodySmall)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            )
+            {
+                Text(text = "English", style = MaterialTheme.typography.bodyLarge)
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowDropDown,
+                        contentDescription = "Select Subject"
+                    )
+
+                }
+            }
+            Button(
+                enabled = taskTitleError == null,
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 20.dp)
+            ) {
+                Text(text = "Save")
             }
         }
     }
@@ -145,4 +219,27 @@ private fun TaskScreenTopBar(
             }
 
         })
+}
+
+@Composable
+private fun PriorityButton(
+    modifier: Modifier = Modifier,
+    label: String,
+    backgroundColor : Color,
+    borderColor: Color,
+    labelColor: Color,
+    onClick: () -> Unit
+) {
+    Box(modifier = modifier
+        .background(backgroundColor)
+        .clickable { onClick() }
+        .padding(5.dp)
+        .border(1.dp, borderColor, RoundedCornerShape(5.dp))
+        .padding(5.dp),
+    contentAlignment = Alignment.Center
+    ){
+        Text(text = label ,
+            color = labelColor,
+            )
+    }
 }
