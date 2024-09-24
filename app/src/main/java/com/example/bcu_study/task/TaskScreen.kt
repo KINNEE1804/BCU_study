@@ -1,6 +1,7 @@
 package com.example.bcu_study.task
 
-import android.icu.text.AlphabeticIndex.Bucket.LabelType
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -30,6 +31,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,13 +47,24 @@ import com.example.bcu_study.components.DeleteDialog
 import com.example.bcu_study.components.TaskCheckBox
 import com.example.bcu_study.ui.theme.Red
 import com.example.bcu_study.util.Priority
+import com.example.bcu_study.util.changeMillisToDateString
+import com.example.studysmart.presentation.components.TaskDatePicker
+import java.time.Instant
 
+@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskScreen() {
 
     var isDeleteDialogOpen by rememberSaveable {
         mutableStateOf(false)
     }
+    var isDatePickerDialogOpen by rememberSaveable {
+        mutableStateOf(false)
+    }
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = Instant.now().toEpochMilli()
+    )
     var title by remember {
         mutableStateOf("")
     }
@@ -76,7 +90,15 @@ fun TaskScreen() {
         onConfirmButtonClick = {
             isDeleteDialogOpen = false
         })
-
+    TaskDatePicker(
+        state = datePickerState,
+        isOpen = isDatePickerDialogOpen,
+        onDismissRequest = { isDatePickerDialogOpen = false },
+        onConfirmButtonClicked = {
+            isDatePickerDialogOpen = false
+        }
+    )
+    
     Scaffold(
         topBar = {
             TaskScreenTopBar(
@@ -118,8 +140,9 @@ fun TaskScreen() {
                 verticalAlignment = Alignment.CenterVertically
             )
             {
-                Text(text = "19 September, 2024", style = MaterialTheme.typography.bodyLarge)
-                IconButton(onClick = { /*TODO*/ }) {
+                Text(text = datePickerState.selectedDateMillis.changeMillisToDateString(),
+                    style = MaterialTheme.typography.bodyLarge)
+                IconButton(onClick = { isDatePickerDialogOpen = true }) {
                     Icon(
                         imageVector = Icons.Default.DateRange,
                         contentDescription = "Select Due Date"
