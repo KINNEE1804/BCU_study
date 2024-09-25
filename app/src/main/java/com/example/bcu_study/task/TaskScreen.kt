@@ -33,10 +33,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberDateRangePickerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -44,11 +46,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.bcu_study.components.DeleteDialog
+import com.example.bcu_study.components.SubjectListBottomSheet
 import com.example.bcu_study.components.TaskCheckBox
+import com.example.bcu_study.subject
 import com.example.bcu_study.ui.theme.Red
 import com.example.bcu_study.util.Priority
 import com.example.bcu_study.util.changeMillisToDateString
 import com.example.studysmart.presentation.components.TaskDatePicker
+import kotlinx.coroutines.launch
 import java.time.Instant
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -65,6 +70,11 @@ fun TaskScreen() {
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = Instant.now().toEpochMilli()
     )
+    val sheetState = rememberModalBottomSheetState()
+    var isBottomSheetOpen by remember {
+        mutableStateOf(false)
+    }
+    val scope = rememberCoroutineScope()
     var title by remember {
         mutableStateOf("")
     }
@@ -98,6 +108,16 @@ fun TaskScreen() {
             isDatePickerDialogOpen = false
         }
     )
+    SubjectListBottomSheet(
+        sheetState = sheetState,
+        isOpen = isBottomSheetOpen,
+        subjects = subject,
+        onDismissRequest = {isBottomSheetOpen = false},
+        onSubjectClicked = {
+            scope.launch { sheetState.hide() }.invokeOnCompletion {
+                if (!sheetState.isVisible)isBottomSheetOpen = false
+            }
+        })
     
     Scaffold(
         topBar = {
@@ -179,7 +199,7 @@ fun TaskScreen() {
             )
             {
                 Text(text = "English", style = MaterialTheme.typography.bodyLarge)
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = { isBottomSheetOpen = true }) {
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
                         contentDescription = "Select Subject"
