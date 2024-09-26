@@ -85,7 +85,7 @@ private fun StudySessionCard (
     onDeleteIconClick : () -> Unit
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
     ) {
         Row (modifier = Modifier
             .fillMaxWidth(),

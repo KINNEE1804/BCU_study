@@ -15,6 +15,7 @@ import com.example.bcu_study.dashboard.DashboardScreen
 import com.example.bcu_study.domain.model.Session
 import com.example.bcu_study.domain.model.Subject
 import com.example.bcu_study.domain.model.Tasks
+import com.example.bcu_study.session.SessionScreen
 import com.example.bcu_study.subject.SubjectScreen
 import com.example.bcu_study.task.TaskScreen
 import com.example.bcu_study.ui.theme.BCU_studyTheme
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BCU_studyTheme {
-                TaskScreen()
+               SessionScreen()
             }
         }
     }
