@@ -53,13 +53,26 @@ import com.example.bcu_study.ui.theme.Red
 import com.example.bcu_study.util.Priority
 import com.example.bcu_study.util.changeMillisToDateString
 import com.example.studysmart.presentation.components.TaskDatePicker
+import com.ramcosta.composedestinations.annotation.Destination
 import kotlinx.coroutines.launch
 import java.time.Instant
+
+data class TaskScreenNavArgs(
+    val taskId: Int?,
+    val subjectId: Int?
+)
+
+@Destination
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun TaskScreenRoute () {
+    TaskScreen()
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskScreen() {
+private fun TaskScreen() {
 
     var isDeleteDialogOpen by rememberSaveable {
         mutableStateOf(false)

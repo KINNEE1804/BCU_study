@@ -50,11 +50,22 @@ import com.example.bcu_study.components.tasksList
 import com.example.bcu_study.domain.model.Subject
 import com.example.bcu_study.session
 import com.example.bcu_study.tasks
+import com.ramcosta.composedestinations.annotation.Destination
+
+data class SubjectScreenNavArgs(
+    val subjectId: Int
+)
+
+@Destination (navArgsDelegate = SubjectScreenNavArgs::class)
+@Composable
+fun  SubjectScreenRoute () {
+    SubjectScreen()
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SubjectScreen() {
+private fun SubjectScreen() {
 
     val listSate = rememberLazyListState()
     val isFABExpanded by remember {

@@ -39,13 +39,21 @@ import androidx.compose.ui.unit.sp
 import com.example.bcu_study.components.DeleteDialog
 import com.example.bcu_study.components.StudySessionsList
 import com.example.bcu_study.components.SubjectListBottomSheet
+import com.example.bcu_study.domain.model.Session
 import com.example.bcu_study.session
 import com.example.bcu_study.subject
+import com.ramcosta.composedestinations.annotation.Destination
 import kotlinx.coroutines.launch
+
+@Destination
+@Composable
+fun SessionScreenRoute () {
+    SessionScreen()
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SessionScreen() {
+private fun SessionScreen() {
 
     val sheetState = rememberModalBottomSheetState()
     var isBottomSheetOpen by remember {
@@ -104,7 +112,9 @@ fun SessionScreen() {
             }
             item { 
                 ButtonSection(
-                    modifier = Modifier.fillMaxWidth().padding(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
                     startButtonClick = {  },
                     finishButtonClick = {},
                     cancelButtonClick = {  })

@@ -11,13 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.bcu_study.dashboard.DashboardScreen
 import com.example.bcu_study.domain.model.Session
 import com.example.bcu_study.domain.model.Subject
 import com.example.bcu_study.domain.model.Tasks
-import com.example.bcu_study.session.SessionScreen
-import com.example.bcu_study.subject.SubjectScreen
-import com.example.bcu_study.task.TaskScreen
 import com.example.bcu_study.ui.theme.BCU_studyTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,7 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BCU_studyTheme {
-               SessionScreen()
+
             }
         }
     }

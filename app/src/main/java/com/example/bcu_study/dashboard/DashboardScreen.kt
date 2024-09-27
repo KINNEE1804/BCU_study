@@ -52,10 +52,16 @@ import com.example.bcu_study.domain.model.Tasks
 import com.example.bcu_study.session
 import com.example.bcu_study.subject
 import com.example.bcu_study.tasks
+import com.ramcosta.composedestinations.annotation.Destination
 
+@Destination (start = true)
+@Composable
+fun DashboardScreenRoute () {
+    DashboardScreen()
+}
 
 @Composable
-fun DashboardScreen(): Unit {
+private fun  DashboardScreen(): Unit {
 
 
     var isAddSubjectDialogOpen by rememberSaveable { mutableStateOf(false) }
