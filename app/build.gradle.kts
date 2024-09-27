@@ -32,13 +32,21 @@ android {
             )
         }
     }
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
@@ -53,8 +61,8 @@ android {
     }
 }
 
-
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,9 +71,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.ui.text.google.fonts)
-    implementation(libs.androidx.navigation.safe.args.generator)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -74,36 +79,27 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Fix typo in lifecycle-runtime-compose dependency
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.6")
-
-    // Compose Destination
+    //compose destination
     val destinationVersion = "1.9.52"
-    implementation("io.github.raamcosta.compose-destinations:core:$destinationVersion") {
-        exclude(group= "xmlpull", module= "xmlpull")
-        exclude(group= "xpp3", module= "xpp3")
-    }
+    implementation("io.github.raamcosta.compose-destinations:core:$destinationVersion")
     ksp("io.github.raamcosta.compose-destinations:ksp:$destinationVersion")
 
     // Room
     val roomVersion = "2.5.2"
-    implementation("androidx.room:room-runtime:$roomVersion") {
-        exclude(group= "xmlpull", module= "xmlpull")
-        exclude(group= "xpp3", module= "xpp3")
-    }
+    implementation("androidx.room:room-runtime:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
-    // Dagger-Hilt
+    //Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.48")
     ksp("com.google.dagger:hilt-android-compiler:2.48")
     ksp("androidx.hilt:hilt-compiler:1.0.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
-    // Fonts
+    //fonts
     implementation("androidx.compose.ui:ui-text-google-fonts:1.5.3")
 
-    // Desugaring
+    //Desugaring
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
-}
 
+}

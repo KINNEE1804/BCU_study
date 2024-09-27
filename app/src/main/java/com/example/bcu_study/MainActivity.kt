@@ -15,6 +15,7 @@ import com.example.bcu_study.domain.model.Session
 import com.example.bcu_study.domain.model.Subject
 import com.example.bcu_study.domain.model.Tasks
 import com.example.bcu_study.ui.theme.BCU_studyTheme
+import com.ramcosta.composedestinations.DestinationsNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BCU_studyTheme {
-
+                DestinationsNavHost(navGraph = NavGraphs.root)
             }
         }
     }
