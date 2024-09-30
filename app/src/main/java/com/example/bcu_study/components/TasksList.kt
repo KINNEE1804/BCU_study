@@ -78,7 +78,7 @@ private fun TaskCard (
     onClick:() -> Unit
 ) {
     ElevatedCard(
-        modifier = Modifier.clickable { onClick() }
+        modifier = modifier.clickable { onClick() }
     ) {
         Row (modifier = Modifier
             .fillMaxWidth()

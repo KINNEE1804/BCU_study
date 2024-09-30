@@ -47,21 +47,45 @@ import com.example.bcu_study.components.DeleteDialog
 import com.example.bcu_study.components.StudySessionsList
 import com.example.bcu_study.components.SubjectCard
 import com.example.bcu_study.components.tasksList
+import com.example.bcu_study.destinations.SessionScreenRouteDestination
+import com.example.bcu_study.destinations.SubjectScreenRouteDestination
+import com.example.bcu_study.destinations.TaskScreenRouteDestination
 import com.example.bcu_study.domain.model.Session
 import com.example.bcu_study.domain.model.Tasks
 import com.example.bcu_study.session
 import com.example.bcu_study.subject
+import com.example.bcu_study.subject.SubjectScreenNavArgs
+import com.example.bcu_study.task.TaskScreenNavArgs
 import com.example.bcu_study.tasks
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination (start = true)
 @Composable
-fun DashboardScreenRoute () {
-    DashboardScreen()
+fun DashboardScreenRoute (
+    navigator: DestinationsNavigator
+) {
+      DashboardScreen(
+          onSubjectCardClick = { subjectId -> subjectId?.let {
+              val navArg = SubjectScreenNavArgs(subjectId = subjectId)
+              navigator.navigate(SubjectScreenRouteDestination(navArgs = navArg))
+          }},
+          onTaskCardClick = { taskId ->
+              val navArg = TaskScreenNavArgs(taskId = taskId, subjectId = null)
+              navigator.navigate(TaskScreenRouteDestination(navArgs = navArg))
+          },
+          onStartSessionButtonClick = {
+              navigator.navigate(SessionScreenRouteDestination())
+          }
+      )
 }
 
 @Composable
-private fun  DashboardScreen(): Unit {
+private fun  DashboardScreen(
+    onSubjectCardClick: (Int?) -> Unit,
+    onTaskCardClick: (Int?) -> Unit,
+    onStartSessionButtonClick: () -> Unit
+): Unit {
 
 
     var isAddSubjectDialogOpen by rememberSaveable { mutableStateOf(false) }
@@ -111,12 +135,13 @@ private fun  DashboardScreen(): Unit {
                     subjectList = subject,
                     onAddIconClicked = {
                         isAddSubjectDialogOpen = true
-                    }
+                    },
+                    onSubjectCardClick = onSubjectCardClick
                 )
             }
             item {
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = onStartSessionButtonClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 48.dp, vertical = 20.dp)
@@ -131,7 +156,7 @@ private fun  DashboardScreen(): Unit {
                         "Click the + button in subject screen to add new tasks",
                 tasks = tasks,
                 onCheckBoxClick = {},
-                onTaskCardClick = {}
+                onTaskCardClick = onTaskCardClick
             )
             item {
                 Spacer(modifier = Modifier.height(20.dp))
@@ -197,10 +222,11 @@ private fun SubjectCardsSection(
     modifier: Modifier,
     subjectList: List<Subject>,
     emptyListText: String = "You don't have any subjects.\n Click the + button to add new subject. ",
-    onAddIconClicked: () -> Unit
+    onAddIconClicked: () -> Unit,
+    onSubjectCardClick: (Int?) -> Unit
 ): Unit {
     Column(
-        modifier = Modifier,
+        modifier = modifier,
 
         ) {
         Row(
@@ -241,7 +267,7 @@ private fun SubjectCardsSection(
                 SubjectCard(
                     subjectName = subject.name,
                     gradientColors = subject.colors,
-                    onClick = {})
+                    onClick = {onSubjectCardClick(subject.subjectId)})
             }
         }
     }

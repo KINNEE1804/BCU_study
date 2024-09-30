@@ -43,17 +43,24 @@ import com.example.bcu_study.domain.model.Session
 import com.example.bcu_study.session
 import com.example.bcu_study.subject
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 
 @Destination
 @Composable
-fun SessionScreenRoute () {
-    SessionScreen()
+fun SessionScreenRoute (
+    navigator: DestinationsNavigator
+) {
+    SessionScreen(
+        onBackButtonClick = {navigator.navigateUp()}
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SessionScreen() {
+private fun SessionScreen(
+    onBackButtonClick: () -> Unit
+) {
 
     val sheetState = rememberModalBottomSheetState()
     var isBottomSheetOpen by remember {
@@ -86,7 +93,7 @@ private fun SessionScreen() {
         })
     Scaffold(
         topBar = {
-            SessionScreenTopBar ( onBackButtonClick = {})
+            SessionScreenTopBar ( onBackButtonClick = onBackButtonClick)
         }
     ) {
         paddingValues ->

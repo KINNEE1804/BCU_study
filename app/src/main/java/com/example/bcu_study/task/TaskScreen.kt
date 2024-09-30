@@ -54,6 +54,7 @@ import com.example.bcu_study.util.Priority
 import com.example.bcu_study.util.changeMillisToDateString
 import com.example.studysmart.presentation.components.TaskDatePicker
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 import java.time.Instant
 
@@ -62,17 +63,23 @@ data class TaskScreenNavArgs(
     val subjectId: Int?
 )
 
-@Destination
 @RequiresApi(Build.VERSION_CODES.O)
+@Destination(navArgsDelegate = TaskScreenNavArgs::class)
 @Composable
-fun TaskScreenRoute () {
-    TaskScreen()
+fun TaskScreenRoute(
+    navigator: DestinationsNavigator
+) {
+    TaskScreen(
+        onBackButtonClick = { navigator.navigateUp() }
+    )
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TaskScreen() {
+private fun TaskScreen(
+    onBackButtonClick: () -> Unit
+) {
 
     var isDeleteDialogOpen by rememberSaveable {
         mutableStateOf(false)
@@ -138,7 +145,7 @@ private fun TaskScreen() {
                 isTaskExist = true,
                 isComplete = false,
                 checkBoxBorderColor = Red,
-                onBackButtonClick = { /*TODO*/ },
+                onBackButtonClick = onBackButtonClick,
                 onDeleteButtonClick = { isDeleteDialogOpen = true },
                 onCheckBoxClick = {}
             )
