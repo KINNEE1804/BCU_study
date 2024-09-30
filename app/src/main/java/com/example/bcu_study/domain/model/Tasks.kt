@@ -1,5 +1,9 @@
 package com.example.bcu_study.domain.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Tasks(
     val title: String,
     val description: String,
@@ -8,5 +12,6 @@ data class Tasks(
     val relatedToSubject: String,
     val isComplete: Boolean,
     val taskSubjectId : Int,
-    val tasksId: Int
+    @PrimaryKey(autoGenerate = true)
+    val tasksId: Int? = null
 )
