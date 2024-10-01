@@ -1,0 +1,13 @@
+androidx.compose.ui.text.googlefonts.DefaultFontsContractCompatLoader
+androidx.compose.ui.text.googlefonts.FontProviderHelperKt
+androidx.compose.ui.text.googlefonts.FontProviderHelperKt$throwFormattedCertsMissError$fullDescription$1
+androidx.compose.ui.text.googlefonts.FontsContractCompatLoader
+androidx.compose.ui.text.googlefonts.GoogleFont
+androidx.compose.ui.text.googlefonts.GoogleFont$Provider
+androidx.compose.ui.text.googlefonts.GoogleFontImpl
+androidx.compose.ui.text.googlefonts.GoogleFontKt
+androidx.compose.ui.text.googlefonts.GoogleFontTypefaceLoader
+androidx.compose.ui.text.googlefonts.GoogleFontTypefaceLoader$awaitLoad$4$callback$1
+androidx.compose.ui.text.googlefonts.HandlerHelper
+androidx.compose.ui.text.googlefonts.HandlerHelper$Handler28Impl
+androidx.compose.ui.text.googlefonts.XmlLoaderKt
