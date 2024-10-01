@@ -1,4 +1,4 @@
-package com.example.bcu_study.task
+package com.example.bcu_study.presentation.es.task
 
 import android.os.Build
 import androidx.annotation.RequiresApi

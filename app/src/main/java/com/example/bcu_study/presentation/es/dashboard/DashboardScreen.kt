@@ -1,4 +1,4 @@
-package com.example.bcu_study.dashboard
+package com.example.bcu_study.presentation.es.dashboard
 
 import android.widget.EditText
 import androidx.compose.foundation.Image
@@ -54,8 +54,8 @@ import com.example.bcu_study.domain.model.Session
 import com.example.bcu_study.domain.model.Tasks
 import com.example.bcu_study.session
 import com.example.bcu_study.subject
-import com.example.bcu_study.subject.SubjectScreenNavArgs
-import com.example.bcu_study.task.TaskScreenNavArgs
+import com.example.bcu_study.presentation.es.subject.SubjectScreenNavArgs
+import com.example.bcu_study.presentation.es.task.TaskScreenNavArgs
 import com.example.bcu_study.tasks
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator

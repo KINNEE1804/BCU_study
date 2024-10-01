@@ -1,4 +1,4 @@
-package com.example.bcu_study.session
+package com.example.bcu_study.presentation.es.session
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement

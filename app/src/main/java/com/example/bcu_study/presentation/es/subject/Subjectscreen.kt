@@ -1,4 +1,4 @@
-package com.example.bcu_study.subject
+package com.example.bcu_study.presentation.es.subject
 
 import android.icu.text.CaseMap.Title
 import androidx.compose.foundation.layout.Arrangement
@@ -50,7 +50,7 @@ import com.example.bcu_study.components.tasksList
 import com.example.bcu_study.destinations.TaskScreenRouteDestination
 import com.example.bcu_study.domain.model.Subject
 import com.example.bcu_study.session
-import com.example.bcu_study.task.TaskScreenNavArgs
+import com.example.bcu_study.presentation.es.task.TaskScreenNavArgs
 import com.example.bcu_study.tasks
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
