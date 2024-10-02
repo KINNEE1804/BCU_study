@@ -1,19 +1,18 @@
 package com.example.bcu_study.domain.model
 
-import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.bcu_study.ui.theme.gradient1
-import com.example.bcu_study.ui.theme.gradient2
-import com.example.bcu_study.ui.theme.gradient3
-import com.example.bcu_study.ui.theme.gradient4
-import com.example.bcu_study.ui.theme.gradient5
+import com.example.bcu_study.presentation.es.theme.gradient1
+import com.example.bcu_study.presentation.es.theme.gradient2
+import com.example.bcu_study.presentation.es.theme.gradient3
+import com.example.bcu_study.presentation.es.theme.gradient4
+import com.example.bcu_study.presentation.es.theme.gradient5
 
 @Entity
 data class Subject(
     val name: String,
     val goalHours : Float,
-    val colors: List<Color>,
+    val colors: List<Int>,
     @PrimaryKey(autoGenerate = true)
     val subjectId: Int? = null
 ){

@@ -32,7 +32,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,11 +44,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bcu_study.components.DeleteDialog
 import com.example.bcu_study.components.SubjectListBottomSheet
 import com.example.bcu_study.components.TaskCheckBox
+import com.example.bcu_study.presentation.es.theme.Red
 import com.example.bcu_study.subject
-import com.example.bcu_study.ui.theme.Red
 import com.example.bcu_study.util.Priority
 import com.example.bcu_study.util.changeMillisToDateString
 import com.example.studysmart.presentation.components.TaskDatePicker
@@ -69,6 +69,7 @@ data class TaskScreenNavArgs(
 fun TaskScreenRoute(
     navigator: DestinationsNavigator
 ) {
+    val viewModel: TaskVM = hiltViewModel()
     TaskScreen(
         onBackButtonClick = { navigator.navigateUp() }
     )

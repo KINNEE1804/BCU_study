@@ -1,6 +1,5 @@
 package com.example.bcu_study.presentation.es.subject
 
-import android.icu.text.CaseMap.Title
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -42,15 +41,16 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bcu_study.components.AddSubjectDialog
 import com.example.bcu_study.components.CountCard
 import com.example.bcu_study.components.DeleteDialog
 import com.example.bcu_study.components.StudySessionsList
 import com.example.bcu_study.components.tasksList
-import com.example.bcu_study.destinations.TaskScreenRouteDestination
 import com.example.bcu_study.domain.model.Subject
-import com.example.bcu_study.session
+import com.example.bcu_study.presentation.es.destinations.TaskScreenRouteDestination
 import com.example.bcu_study.presentation.es.task.TaskScreenNavArgs
+import com.example.bcu_study.session
 import com.example.bcu_study.tasks
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -64,6 +64,7 @@ data class SubjectScreenNavArgs(
 fun  SubjectScreenRoute (
     navigator: DestinationsNavigator
 ) {
+    val viewModel: SubjectVM = hiltViewModel()
     SubjectScreen(
         onBackButtonClick = { navigator.navigateUp() },
         onAddTaskButtonClick = {

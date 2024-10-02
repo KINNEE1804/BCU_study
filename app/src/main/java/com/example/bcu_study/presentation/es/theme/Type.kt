@@ -1,4 +1,4 @@
-package com.example.bcu_study.ui.theme
+package com.example.bcu_study.presentation.es.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

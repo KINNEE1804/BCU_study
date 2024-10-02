@@ -1,4 +1,4 @@
-package com.example.bcu_study.ui.theme
+package com.example.bcu_study.presentation.es.theme
 
 import android.app.Activity
 import android.os.Build

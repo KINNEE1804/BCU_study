@@ -4,8 +4,9 @@ import com.example.bcu_study.data.local.SubjectDao
 import com.example.bcu_study.domain.model.Subject
 import com.example.bcu_study.domain.repository.SubjectRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class SubjectRepoImpl(
+class SubjectRepoImpl @Inject constructor(
     private val subjectDao: SubjectDao
 ) : SubjectRepository{
 
@@ -14,11 +15,11 @@ class SubjectRepoImpl(
     }
 
     override fun getTotalSubjectCount(): Flow<Int> {
-        TODO("Not yet implemented")
+        return subjectDao.getTotalSubjectCount()
     }
 
     override fun getTotalGoalHours(): Flow<Float> {
-        TODO("Not yet implemented")
+        return subjectDao.getTotalHours()
     }
 
     override suspend fun deleteSubject(subjectInt: Int) {
@@ -30,6 +31,6 @@ class SubjectRepoImpl(
     }
 
     override fun getAllSubjects(): Flow<List<Subject>> {
-        TODO("Not yet implemented")
+        return subjectDao.getAllSubject()
     }
 }

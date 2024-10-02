@@ -4,19 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.toArgb
 import com.example.bcu_study.domain.model.Session
 import com.example.bcu_study.domain.model.Subject
 import com.example.bcu_study.domain.model.Tasks
-import com.example.bcu_study.ui.theme.BCU_studyTheme
+import com.example.bcu_study.presentation.es.NavGraphs
+import com.example.bcu_study.presentation.es.theme.BCU_studyTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,21 +30,31 @@ val subject = listOf(
     Subject(
         name = "English",
         goalHours = 10f,
-        colors = Subject.subjectCardColors[0],
+        colors = Subject.subjectCardColors[0].map { it.toArgb() },
         subjectId = 0
     ),
-    Subject(name = "DB", goalHours = 10f, colors = Subject.subjectCardColors[1], subjectId = 0),
-    Subject(name = "JS", goalHours = 10f, colors = Subject.subjectCardColors[2], subjectId = 0),
+    Subject(
+        name = "DB",
+        goalHours = 10f,
+        colors = Subject.subjectCardColors[1].map { it.toArgb() },
+        subjectId = 0
+    ),
+    Subject(
+        name = "JS",
+        goalHours = 10f,
+        colors = Subject.subjectCardColors[2].map { it.toArgb() },
+        subjectId = 0
+    ),
     Subject(
         name = "Python",
         goalHours = 10f,
-        colors = Subject.subjectCardColors[3],
+        colors = Subject.subjectCardColors[3].map { it.toArgb() },
         subjectId = 0
     ),
     Subject(
         name = "C++",
         goalHours = 10f,
-        colors = Subject.subjectCardColors[4],
+        colors = Subject.subjectCardColors[4].map { it.toArgb() },
         subjectId = 0
     ),
 )

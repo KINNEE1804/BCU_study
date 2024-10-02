@@ -1,12 +1,14 @@
 package com.example.bcu_study.util
 
 import android.os.Build
+import android.os.Message
 import androidx.annotation.RequiresApi
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.ui.graphics.Color
-import com.example.bcu_study.ui.theme.Green
-import com.example.bcu_study.ui.theme.Orange
-import com.example.bcu_study.ui.theme.Red
-import java.sql.Date
+import com.example.bcu_study.presentation.es.theme.Green
+import com.example.bcu_study.presentation.es.theme.Orange
+import com.example.bcu_study.presentation.es.theme.Red
+import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -31,4 +33,17 @@ fun Long?.changeMillisToDateString(): String {
                 .toLocalDate()
     }?: LocalDate.now()
     return date.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+}
+
+fun Long.toHours(): Float{
+    val hours = this.toFloat() / 3600f //1h co 3600s
+    return "%.2f".format(hours).toFloat() // chi lay 2 so 0 sau dau .
+}
+
+sealed class Snackbarevent {
+
+    data class ShowSnackbar (val message: String,
+                             val duration: SnackbarDuration = SnackbarDuration.Short )
+        :Snackbarevent()
+
 }

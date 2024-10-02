@@ -4,7 +4,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,10 +35,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bcu_study.components.DeleteDialog
 import com.example.bcu_study.components.StudySessionsList
 import com.example.bcu_study.components.SubjectListBottomSheet
-import com.example.bcu_study.domain.model.Session
 import com.example.bcu_study.session
 import com.example.bcu_study.subject
 import com.ramcosta.composedestinations.annotation.Destination
@@ -51,6 +50,7 @@ import kotlinx.coroutines.launch
 fun SessionScreenRoute (
     navigator: DestinationsNavigator
 ) {
+    val viewModel: SessionVM = hiltViewModel()
     SessionScreen(
         onBackButtonClick = {navigator.navigateUp()}
     )
