@@ -54,14 +54,14 @@ class DashBoardVM @Inject constructor(
         val tasks: StateFlow<List<Tasks>> = taskRepository.getAllUpcomingTasks()
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000), // stop updating after 5s
+                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000), // stop updating after 5s
                 initialValue = emptyList()
             )
 
         val recentSessions: StateFlow<List<Session>> = sessionRepository.getRecentFiveSessions()
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000), // stop updating after 5s
+                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5000), // stop updating after 5s
                 initialValue = emptyList()
             )
 

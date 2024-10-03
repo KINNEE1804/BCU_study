@@ -43,7 +43,6 @@ fun Long.toHours(): Float{
 sealed class Snackbarevent {
 
     data class ShowSnackbar (val message: String,
-                             val duration: SnackbarDuration = SnackbarDuration.Short )
-        :Snackbarevent()
-
+                             val duration: SnackbarDuration = SnackbarDuration.Short ) :Snackbarevent()
+    data object NavigateUp: Snackbarevent()
 }

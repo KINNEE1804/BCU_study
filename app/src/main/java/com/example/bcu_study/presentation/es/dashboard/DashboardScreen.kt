@@ -124,6 +124,8 @@ private fun  DashboardScreen(
                         duration = event.duration
                     )
                 }
+
+                Snackbarevent.NavigateUp -> {}
             }
 
         }

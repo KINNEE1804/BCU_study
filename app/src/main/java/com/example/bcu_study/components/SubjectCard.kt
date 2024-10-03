@@ -25,7 +25,7 @@ fun SubjectCard(
     gradientColors: List<Color>,
     onClick: () -> Unit
 ): Unit {
-    Box(modifier = Modifier.size(150.dp).clickable { onClick() }.
+    Box(modifier = modifier.size(150.dp).clickable { onClick() }.
     background(brush = Brush.verticalGradient(gradientColors), shape = MaterialTheme.shapes.medium))
     {
         Column(modifier = Modifier.padding(12.dp),
@@ -38,7 +38,8 @@ fun SubjectCard(
             Text(
                 text = subjectName,
                 style = MaterialTheme.typography.headlineMedium,
-                color = Color.White
+                color = Color.White,
+                maxLines = 1
 
             )
         }
